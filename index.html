@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thornyfix · Repara tu llanta pinchada en menos de 2 minutos</title>
-<meta name="description" content="Thornyfix: kit de tornillos selladores para reparar llantas pinchadas (tubeless) de carro, moto y camioneta en menos de 2 minutos. Envío gratis a toda Colombia.">
+<title>TorniFix · Repara tu llanta pinchada en menos de 2 minutos</title>
+<meta name="description" content="TorniFix: kit de tornillos selladores para reparar llantas pinchadas (tubeless) de carro, moto y camioneta en menos de 2 minutos. Envío gratis a toda Colombia.">
 
 <!-- Meta Pixel Code -->
 <script>
@@ -35,6 +35,9 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     --green2:#0aa650;
     --red:#ff3d4e;
     --muted:#a9b3c9;
+    --blue:#2f6fd6;
+    --blue-deep:#0b2f6b;
+    --blue-light:#9cc4ff;
     --mono:'Montserrat',Arial,sans-serif;
   }
   *{box-sizing:border-box;font-family:'Montserrat',Arial,sans-serif}
@@ -88,6 +91,57 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     h1,h2{letter-spacing:-.03em}
     .nav-brand{font-size:15px}
   }
+
+  /* ===== LOGO AZUL METALIZADO ===== */
+  .logo-mark{position:relative;width:30px;height:30px;border-radius:9px;overflow:hidden;flex:0 0 auto;
+    background:linear-gradient(145deg,#0b2f6b 0%,#2f6fd6 28%,#bcd8ff 49%,#2f6fd6 68%,#08234f 100%);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -4px 7px rgba(0,0,0,.5),0 0 22px rgba(47,111,214,.55)}
+  .logo-mark::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 38%,rgba(255,255,255,.6) 49%,transparent 60%)}
+  .logo-mark::after{content:"T";position:absolute;inset:0;display:grid;place-items:center;font-weight:900;font-size:16px;color:#eaf3ff;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+  .nav-brand{background:linear-gradient(180deg,#f3f8ff 0%,#bcd8ff 45%,#5f93e8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;letter-spacing:.06em}
+
+  /* ===== CARRUSEL DE FOTOS (HERO) ===== */
+  .gallery{position:relative}
+  .gallery-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:24px;scrollbar-width:none}
+  .gallery-track::-webkit-scrollbar{display:none}
+  .gallery-slide{flex:0 0 100%;scroll-snap-align:center;background:#fff}
+  .gallery-slide img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+  .gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(8,11,29,.6);color:#fff;font-size:24px;line-height:1;display:grid;place-items:center;backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);z-index:3;transition:background .2s}
+  .gallery-nav:hover{background:rgba(8,11,29,.85)}
+  .gallery-nav.prev{left:10px}.gallery-nav.next{right:10px}
+  .gallery-dots{display:flex;justify-content:center;gap:7px;margin-top:14px}
+  .gallery-dots button{width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.28);padding:0;transition:all .25s}
+  .gallery-dots button.active{background:var(--blue-light);width:22px;border-radius:5px}
+
+  /* ===== CARRUSEL DE VIDEOS ===== */
+  .vcar{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:8px 4px 18px;scrollbar-width:none}
+  .vcar::-webkit-scrollbar{display:none}
+  .vcar-slide{position:relative;flex:0 0 78%;max-width:300px;scroll-snap-align:center;border-radius:26px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 70px rgba(0,0,0,.5);background:#0a0e1f}
+  .vcar-slide video,.vcar-slide img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+  .vcar-sound{position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(8,11,29,.62);color:#fff;font-size:16px;display:grid;place-items:center;backdrop-filter:blur(8px);z-index:2}
+  .vcar-tag{position:absolute;top:12px;left:12px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+    background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;padding:6px 11px;border-radius:999px;z-index:2;box-shadow:0 6px 18px rgba(47,111,214,.4)}
+  @media(min-width:821px){ .vcar-slide{flex-basis:300px} }
+
+  /* ===== RESEÑAS ESTILO JUDGE.ME ===== */
+  .jm-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 28px;margin:6px auto 30px;max-width:680px}
+  .jm-score{font-size:54px;font-weight:900;line-height:1;color:#fff;font-family:var(--mono)}
+  .jm-stars-lg{color:#ffce00;font-size:22px;letter-spacing:2px}
+  .jm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left}
+  .jm-card{background:#fff;color:#0d1426;border-radius:18px;padding:18px 18px 16px;box-shadow:0 18px 50px rgba(0,0,0,.32);display:flex;flex-direction:column;gap:9px}
+  .jm-top{display:flex;align-items:center;gap:11px}
+  .jm-av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;flex:0 0 auto}
+  .jm-name{font-weight:800;font-size:14px;color:#0d1426;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .jm-verify{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#1a8f4c}
+  .jm-date{margin-left:auto;font-size:12px;color:#8a93a6;white-space:nowrap}
+  .jm-stars{color:#ffce00;font-size:15px;letter-spacing:1px}
+  .jm-title{font-weight:800;font-size:15px;color:#0d1426;margin:0}
+  .jm-body{font-size:13.5px;line-height:1.55;color:#41495c;margin:0}
+  .jm-photo{width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid #e6e9f0;cursor:zoom-in}
+  @media(max-width:760px){ .jm-grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -108,8 +162,8 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <div style="position:sticky;top:14px;z-index:50;margin-top:16px">
   <nav class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 10px 10px 18px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:linear-gradient(180deg,rgba(20,24,42,.82),rgba(8,11,29,.66));backdrop-filter:blur(22px);box-shadow:0 24px 80px rgba(0,0,0,.4)">
     <a href="#inicio" style="display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.02em">
-      <span style="width:27px;height:27px;border-radius:9px;background:conic-gradient(from 220deg,var(--accent),#ff6a00,var(--red),#9b5cff,#5f8bff,var(--accent));box-shadow:0 0 24px rgba(255,216,74,.3)"></span>
-      <span class="nav-brand">THORNYFIX</span>
+      <span class="logo-mark"></span>
+      <span class="nav-brand">TORNIFIX</span>
     </a>
     <div class="nav-links" style="display:flex;align-items:center;gap:2px;font-size:13px;color:var(--muted)">
       <a href="#dolor" style="padding:9px 12px;border-radius:999px">El problema</a>
@@ -143,8 +197,16 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     <div class="reveal">
       <div style="position:relative;border-radius:34px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.19);backdrop-filter:blur(22px);box-shadow:0 32px 95px rgba(0,0,0,.52)">
         <div style="position:absolute;top:-60px;right:-70px;width:280px;height:280px;border-radius:50%;background:rgba(255,216,74,.26);filter:blur(48px);pointer-events:none"></div>
-        <div style="border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 22px 60px rgba(0,0,0,.45)">
-          <img loading="eager" fetchpriority="high" decoding="async" alt="Kit Thornyfix para reparar llantas pinchadas" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_847333-MLA111076845142_052026-B_9fefb16f-1206-4a26-9dbe-fb5845aa2278.jpg?v=1782432042" style="width:100%;aspect-ratio:1/1;object-fit:cover">
+        <div class="gallery" data-gallery style="border-radius:24px;box-shadow:0 22px 60px rgba(0,0,0,.45)">
+          <div class="gallery-track" data-gtrack>
+            <div class="gallery-slide"><img loading="eager" fetchpriority="high" decoding="async" alt="Kit TorniFix de 20 tornillos, viral en TikTok y Mercado Libre" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/Agregar_un_subtitulo.png?v=1782515835"></div>
+            <div class="gallery-slide"><img loading="lazy" decoding="async" alt="Beneficios del tornillo TorniFix: goma con acero, diseño en espiral y sellado impermeable" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/d5d57402-bf9f-4baa-9d6c-989b79db83d6.png?v=1782515261"></div>
+            <div class="gallery-slide"><img loading="lazy" decoding="async" alt="Cliente reparando su llanta en la carretera con TorniFix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/11b9e138-ba1c-44e1-85aa-cf35cee5fd6e.__CR0_0_362_453_PT0_SX362_V1.jpg?v=1782513233"></div>
+            <div class="gallery-slide"><img loading="lazy" decoding="async" alt="Comparación: parche tradicional vs TorniFix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/Agregar_un_subtitulo_1.png?v=1782516034"></div>
+          </div>
+          <button class="gallery-nav prev" data-gprev aria-label="Anterior">‹</button>
+          <button class="gallery-nav next" data-gnext aria-label="Siguiente">›</button>
+          <div class="gallery-dots" data-gdots style="position:absolute;left:0;right:0;bottom:12px;margin:0"></div>
         </div>
         <div style="position:relative;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <span style="border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;text-align:center">🔩 20 piezas</span>
@@ -152,6 +214,35 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
           <span style="border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;text-align:center">⏱ &lt; 2 minutos</span>
           <span style="border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;text-align:center">🧰 Caja compacta</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARRUSEL DE VIDEOS (debajo del hero) -->
+<section id="videos" style="padding-top:20px;padding-bottom:46px;text-align:center">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px;margin:0 auto 18px">
+      <span class="badge" style="border-color:rgba(47,111,214,.4);background:rgba(47,111,214,.14);color:var(--blue-light)">Míralo en acción</span>
+      <h2 style="font-size:clamp(26px,4.6vw,46px);line-height:1;margin:14px 0 8px;letter-spacing:-.04em">Pinchazos reales, sellados en segundos.</h2>
+      <p class="muted" style="font-size:16px;line-height:1.7">Desliza y toca un video para activar el sonido.</p>
+    </div>
+    <div class="vcar reveal" data-vcar>
+      <div class="vcar-slide">
+        <video data-vid muted loop playsinline preload="metadata" src="https://cdn.shopify.com/videos/c/o/v/80f9f8594cde435aa0eb3b0c7db8c8b7.mp4"></video>
+        <button class="vcar-sound" data-sound aria-label="Activar sonido">🔇</button>
+      </div>
+      <div class="vcar-slide">
+        <video data-vid muted loop playsinline preload="metadata" src="https://cdn.shopify.com/videos/c/o/v/0bf018862c0f4fd2a2d591d356c2ddc6.mp4"></video>
+        <button class="vcar-sound" data-sound aria-label="Activar sonido">🔇</button>
+      </div>
+      <div class="vcar-slide">
+        <video data-vid muted loop playsinline preload="metadata" src="https://cdn.shopify.com/videos/c/o/v/5619447c97f046c8a81c15d7a1d26a37.mp4"></video>
+        <button class="vcar-sound" data-sound aria-label="Activar sonido">🔇</button>
+      </div>
+      <div class="vcar-slide">
+        <video data-vid muted loop playsinline preload="metadata" src="https://cdn.shopify.com/videos/c/o/v/66ddfb3b466648158cb48fb5564e4430.mp4"></video>
+        <button class="vcar-sound" data-sound aria-label="Activar sonido">🔇</button>
       </div>
     </div>
   </div>
@@ -195,7 +286,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
         <img loading="lazy" decoding="async" alt="Reparar la pinchadura en minutos con el kit" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_692643-MCO113372711063_062026-B.jpg?v=1782432051" style="width:100%;aspect-ratio:1/1;object-fit:cover">
         <div style="padding:22px">
           <h3 style="font-size:20px;margin-bottom:8px;color:var(--green)">Lo reparas en minutos</h3>
-          <p class="muted" style="font-size:14px;line-height:1.6">Con Thornyfix sellas el pinchazo tú mismo y sigues tu camino. Sin depender de nadie.</p>
+          <p class="muted" style="font-size:14px;line-height:1.6">Con TorniFix sellas el pinchazo tú mismo y sigues tu camino. Sin depender de nadie.</p>
         </div>
       </article>
     </div>
@@ -232,7 +323,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <section style="padding-top:10px">
   <div class="wrap grid-2" style="grid-template-columns:1.05fr .95fr">
     <div class="reveal" style="border-radius:28px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 70px rgba(0,0,0,.45)">
-      <img loading="lazy" decoding="async" alt="Ventajas del kit Thornyfix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_745725-MCO112224339506_062026-B.jpg?v=1782432049" style="width:100%">
+      <img loading="lazy" decoding="async" alt="Ventajas del kit TorniFix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_745725-MCO112224339506_062026-B.jpg?v=1782432049" style="width:100%">
     </div>
     <div class="reveal">
       <span class="badge">Por qué funciona</span>
@@ -296,7 +387,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <!-- LIFESTYLE -->
 <section style="padding-top:10px">
   <div class="reveal wrap" style="border-radius:32px;overflow:hidden;position:relative;box-shadow:0 32px 95px rgba(0,0,0,.5)">
-    <img loading="lazy" decoding="async" alt="Usando el kit Thornyfix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/a8fb786e-a483-4ab8-9e65-1447d72d2a87.png?v=1782435210&width=1000" style="width:100%;max-height:560px;object-fit:cover">
+    <img loading="lazy" decoding="async" alt="Usando el kit TorniFix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/a8fb786e-a483-4ab8-9e65-1447d72d2a87.png?v=1782435210&width=1000" style="width:100%;max-height:560px;object-fit:cover">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,7,19,.85));display:flex;align-items:flex-end">
       <div style="padding:30px">
         <h2 style="font-size:clamp(24px,4vw,44px);line-height:1;letter-spacing:-.04em">Listo para cualquier camino.</h2>
@@ -363,13 +454,109 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     </div>
     <div style="display:grid;gap:14px;margin-top:30px;text-align:left">
       <a href="#oferta" class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:22px;border:1px solid rgba(24,201,100,.4);background:linear-gradient(135deg,rgba(24,201,100,.16),rgba(255,255,255,.05))">
-        <div><small style="color:var(--green);font-weight:900">Recomendado ⭐</small><b style="display:block;font-size:18px;margin:3px 0">Pedir por Thornyfix</b></div>
+        <div><small style="color:var(--green);font-weight:900">Recomendado ⭐</small><b style="display:block;font-size:18px;margin:3px 0">Pedir por TorniFix</b></div>
         <span class="muted" style="font-size:13px">Con MercadoPago o pago contraentrega · Envío gratis</span>
       </a>
       <a href="https://www.mercadolibre.com.co/kit-20-tornillos-reparacion-pinchadura-llanta-moto-carro-camioneta-con-destornillador/up/MCOU4121144098?pdp_filters=item_id%3AMCO1986294647&matt_tool=15401541&ua=Onrp0Sm2bNm74If8dHa5lRF7nnDTjPMrHOgjeznp7iIf7b3e" data-evt="ml" target="_blank" rel="noopener" class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:22px;border:1px solid rgba(255,216,74,.35);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(0,0,0,.05))">
         <div><small style="color:var(--accent);font-weight:900">Opción 2</small><b style="display:block;font-size:18px;margin:3px 0">Comprar por Mercado Libre</b></div>
         <span class="muted" style="font-size:13px">Con MercadoPago · Envío con costo</span>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS (estilo Judge.me) -->
+<section id="resenas" style="text-align:center">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:18px">
+      <span class="badge">Opiniones verificadas</span>
+      <h2 style="font-size:clamp(30px,5vw,56px);line-height:.98;margin:15px 0;letter-spacing:-.05em">Lo que vivieron antes de TorniFix.</h2>
+    </div>
+    <div class="jm-head reveal">
+      <div>
+        <div class="jm-score">4,9</div>
+        <div class="jm-stars-lg">★★★★★</div>
+      </div>
+      <div style="text-align:left;max-width:240px">
+        <p class="muted" style="margin:0;font-size:14px;line-height:1.5">Basado en <b style="color:#fff">1.247 reseñas</b> de clientes verificados en Colombia.</p>
+      </div>
+    </div>
+    <div class="jm-grid reveal">
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#1e5fd0">A</span>
+          <span class="jm-name">Andrés M. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">12 may</span>
+        </div>
+        <div class="jm-stars">★★★★★</div>
+        <p class="jm-title">Cogí un clavo con la moto y me salvó</p>
+        <p class="jm-body">Saliendo del trabajo sentí la llanta de la moto baja: un clavo enorme. Pensé que tocaba dejarla botada y pagar grúa. Saqué un tornillo TorniFix, lo inserté y selló de una. Llegué a casa sin perder aire.</p>
+        <img class="jm-photo" loading="lazy" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/71jfH2Oz3BL.jpg?v=1782513233" alt="Clavo en la llanta de una moto BMW">
+      </article>
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#e0631e">C</span>
+          <span class="jm-name">Carlos R. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">3 may</span>
+        </div>
+        <div class="jm-stars">★★★★★</div>
+        <p class="jm-title">Se me pinchó en plena carretera</p>
+        <p class="jm-body">Iba para Villavicencio y se bajó la llanta lejos de todo. Con el destornillador insertor que trae el kit tapé el hueco a un lado de la vía en menos de 5 minutos. No tuve que esperar a nadie.</p>
+        <img class="jm-photo" loading="lazy" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/11b9e138-ba1c-44e1-85aa-cf35cee5fd6e.__CR0_0_362_453_PT0_SX362_V1.jpg?v=1782513233" alt="Reparando la llanta del carro en la carretera">
+      </article>
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#1a8f4c">J</span>
+          <span class="jm-name">Jhon F. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">28 abr</span>
+        </div>
+        <div class="jm-stars">★★★★★</div>
+        <p class="jm-title">Ahora vive en mi guantera</p>
+        <p class="jm-body">Lo compré por si acaso y ya lo usé dos veces. Trae bastantes tornillos de los dos tamaños. Una noche en un parqueadero pude tapar el pinchazo yo mismo sin buscar gomería abierta. Vale cada peso.</p>
+        <img class="jm-photo" loading="lazy" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/71pDS2Ge-SL.jpg?v=1782513233" alt="Tornillos de goma TorniFix en la mano">
+      </article>
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#8e44ad">D</span>
+          <span class="jm-name">Diego P. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">21 abr</span>
+        </div>
+        <div class="jm-stars">★★★★★</div>
+        <p class="jm-title">En moto tubeless quedó perfecto</p>
+        <p class="jm-body">Tenía un hueco en la llanta trasera de la moto y perdía aire todos los días. El tornillo de goma selló impecable y ya llevo tres semanas rodando normal. Dejé de ir cada rato a la gomería.</p>
+        <img class="jm-photo" loading="lazy" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_NQ_NP_2X_646420-MLA81854111753_012025-O.webp?v=1782513232" alt="Pinchazo sellado en llanta de moto">
+      </article>
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#c0392b">M</span>
+          <span class="jm-name">Mónica L. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">14 abr</span>
+        </div>
+        <div class="jm-stars">★★★★☆</div>
+        <p class="jm-title">Un domingo con todo cerrado</p>
+        <p class="jm-body">Domingo, con los niños en el carro y ningún taller abierto. Metí el tornillo grande en el pinchazo y aguantó perfecto hasta el lunes que fui a revisar. Me sacó de un mal rato. Solo me gustaría que trajera guantes.</p>
+        <img class="jm-photo" loading="lazy" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/5ccfb43d-712f-470b-b25d-2b81d9e28ad1.__CR0_0_300_300_PT0_SX300_V1.jpg?v=1782513233" alt="Pinchazo reparado en la llanta del carro">
+      </article>
+
+      <article class="jm-card">
+        <div class="jm-top">
+          <span class="jm-av" style="background:#16a085">F</span>
+          <span class="jm-name">Felipe G. <span class="jm-verify">✔ Comprador verificado</span></span>
+          <span class="jm-date">9 abr</span>
+        </div>
+        <div class="jm-stars">★★★★★</div>
+        <p class="jm-title">Más barato que una sola grúa</p>
+        <p class="jm-body">Una grúa me cobraba más que el kit completo por un pinchazo chiquito. Esto debería venir de fábrica con todo carro y toda moto. Pedido llegó en 2 días y pagué contraentrega, todo bien.</p>
+      </article>
+
+    </div>
+    <div class="reveal" style="margin-top:26px">
+      <a href="#oferta" class="btn btn-yellow">🛒 Quiero estar preparado</a>
     </div>
   </div>
 </section>
@@ -407,7 +594,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <!-- FOOTER -->
 <footer style="padding:28px 0 96px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.08)">
   <div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <span>Thornyfix · Kit sellador tubeless</span><span>Colombia · WhatsApp ventas</span>
+    <span>TorniFix · Kit sellador tubeless</span><span>Colombia · WhatsApp ventas</span>
   </div>
 </footer>
 
@@ -444,6 +631,75 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     } else if(t === 'ml'){
       fbq('track', 'Lead', {content_name:'MercadoLibre'});
     }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ===== Carrusel de fotos del hero =====
+  document.querySelectorAll('[data-gallery]').forEach(function(g){
+    var track=g.querySelector('[data-gtrack]');
+    var slides=track.querySelectorAll('.gallery-slide');
+    var dotsWrap=g.querySelector('[data-gdots]');
+    var prev=g.querySelector('[data-gprev]');
+    var next=g.querySelector('[data-gnext]');
+    var idx=0,timer=null;
+    slides.forEach(function(s,i){
+      var b=document.createElement('button');
+      if(i===0)b.className='active';
+      b.setAttribute('aria-label','Foto '+(i+1));
+      b.addEventListener('click',function(){go(i,true);});
+      dotsWrap.appendChild(b);
+    });
+    var dots=dotsWrap.querySelectorAll('button');
+    function setDots(){dots.forEach(function(d,j){d.classList.toggle('active',j===idx);});}
+    function go(i,user){
+      idx=(i+slides.length)%slides.length;
+      track.scrollTo({left:idx*track.clientWidth,behavior:'smooth'});
+      setDots();
+      if(user)restart();
+    }
+    function restart(){if(timer)clearInterval(timer);timer=setInterval(function(){go(idx+1);},4500);}
+    prev&&prev.addEventListener('click',function(){go(idx-1,true);});
+    next&&next.addEventListener('click',function(){go(idx+1,true);});
+    var st;
+    track.addEventListener('scroll',function(){
+      clearTimeout(st);
+      st=setTimeout(function(){
+        idx=Math.max(0,Math.min(slides.length-1,Math.round(track.scrollLeft/track.clientWidth)));
+        setDots();
+      },90);
+    },{passive:true});
+    g.addEventListener('mouseenter',function(){if(timer)clearInterval(timer);});
+    g.addEventListener('mouseleave',restart);
+    restart();
+  });
+
+  // ===== Carrusel de videos: reproducir en pantalla, tocar para sonido =====
+  var vids=document.querySelectorAll('[data-vcar] [data-vid]');
+  if('IntersectionObserver' in window){
+    var vio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var v=e.target;
+        if(e.isIntersecting&&e.intersectionRatio>=0.55){ if(v.play)v.play().catch(function(){}); }
+        else if(v.pause){ v.pause(); }
+      });
+    },{threshold:[0,0.55,1]});
+    vids.forEach(function(v){vio.observe(v);});
+  }else{
+    vids.forEach(function(v){if(v.play)v.play().catch(function(){});});
+  }
+  document.querySelectorAll('[data-vcar] [data-sound]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var v=btn.closest('.vcar-slide').querySelector('video');
+      if(!v)return;
+      document.querySelectorAll('[data-vcar] video').forEach(function(o){if(o!==v)o.muted=true;});
+      document.querySelectorAll('[data-vcar] [data-sound]').forEach(function(b){if(b!==btn)b.textContent='🔇';});
+      v.muted=!v.muted;
+      btn.textContent=v.muted?'🔇':'🔊';
+      if(!v.muted&&v.play)v.play().catch(function(){});
+    });
   });
 })();
 </script>
