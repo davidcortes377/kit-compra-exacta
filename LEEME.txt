@@ -1,0 +1,17 @@
+INSTRUCCIONES RÁPIDAS
+
+1. En Shopify, sube estas 3 imágenes a Assets / Archivos del tema:
+   - ce-tornillo-neumatico.png
+   - ce-neumatico-pinchado.png
+   - ce-kit-completo.png
+
+2. Opción recomendada:
+   Copia el contenido de shopify_pagina_completa.liquid y pégalo en una sección Custom Liquid.
+
+3. Opción por bloques:
+   Pega primero 00_global_montserrat_css_js.liquid una sola vez.
+   Luego pega los bloques de la carpeta /bloques en el orden 01 al 14.
+
+4. Toda la página queda forzada a Montserrat con !important para evitar que el tema de Shopify la cambie.
+
+5. preview_standalone.html sirve solo para revisar localmente; no usa asset_url de Shopify.

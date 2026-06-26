@@ -1,0 +1,474 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Preview Shopify Montserrat</title>
+<!-- PEGAR UNA SOLA VEZ ANTES DE LOS BLOQUES -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --accent:#ffd84a;
+    --green:#18c964;
+    --green2:#0aa650;
+    --red:#ff3d4e;
+    --muted:#a9b3c9;
+    --mono:'Montserrat',Arial,sans-serif;
+  }
+
+  .ce-shopify-page,
+  .ce-shopify-block{
+    font-family:'Montserrat',Arial,sans-serif !important;
+    color:#f8fafc;
+    background:#050713;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .ce-shopify-page *,
+  .ce-shopify-block *{
+    font-family:'Montserrat',Arial,sans-serif !important;
+    box-sizing:border-box;
+  }
+
+  .ce-shopify-page a,
+  .ce-shopify-block a{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .ce-shopify-page img,
+  .ce-shopify-block img{
+    display:block;
+    max-width:100%;
+    height:auto;
+  }
+
+  .ce-shopify-page summary::-webkit-details-marker,
+  .ce-shopify-block summary::-webkit-details-marker{display:none}
+
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)} }
+  @keyframes shine{to{background-position:220% center} }
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(1.5deg)} }
+  @keyframes pulse{0%,100%{transform:translateY(0);box-shadow:0 18px 54px rgba(0,0,0,.4)}50%{transform:translateY(-3px);box-shadow:0 24px 70px rgba(24,201,100,.4)} }
+
+  @media(max-width:760px){
+    .ce-shopify-page [data-navlinks],
+    .ce-shopify-block [data-navlinks]{display:none !important;}
+
+    .ce-shopify-page [data-sticky],
+    .ce-shopify-block [data-sticky]{display:block !important;}
+
+    .ce-shopify-page section > div[style*="display:grid"],
+    .ce-shopify-block section > div[style*="display:grid"]{
+      grid-template-columns:1fr !important;
+      gap:24px !important;
+    }
+
+    .ce-shopify-page div[style*="grid-template-columns:1fr 1fr 1fr"],
+    .ce-shopify-block div[style*="grid-template-columns:1fr 1fr 1fr"],
+    .ce-shopify-page div[style*="grid-template-columns:repeat(3"],
+    .ce-shopify-block div[style*="grid-template-columns:repeat(3"]{
+      grid-template-columns:1fr !important;
+    }
+
+    .ce-shopify-page div[style*="grid-template-columns:repeat(5"],
+    .ce-shopify-block div[style*="grid-template-columns:repeat(5"]{
+      grid-template-columns:1fr 1fr !important;
+    }
+
+    .ce-shopify-page nav,
+    .ce-shopify-block nav{
+      top:10px !important;
+      width:calc(100% - 22px) !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+  function applyHover(){
+    document.querySelectorAll('[style-hover]').forEach(function(el){
+      if(el.dataset.ceHoverReady) return;
+      el.dataset.ceHoverReady = '1';
+      el.addEventListener('mouseenter', function(){
+        el.dataset.cePrevStyle = el.getAttribute('style') || '';
+        el.setAttribute('style', (el.dataset.cePrevStyle || '') + ';' + (el.getAttribute('style-hover') || ''));
+      });
+      el.addEventListener('mouseleave', function(){
+        if(typeof el.dataset.cePrevStyle !== 'undefined'){
+          el.setAttribute('style', el.dataset.cePrevStyle);
+          delete el.dataset.cePrevStyle;
+        }
+      });
+    });
+  }
+
+  function applyReveal(){
+    var items = document.querySelectorAll('[data-reveal]');
+    var reveal = function(el){ el.style.opacity = 1; el.style.transform = 'none'; };
+    try{
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            reveal(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.08, rootMargin:'0px 0px -4% 0px'});
+      items.forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ items.forEach(reveal); }, 900);
+    }catch(e){
+      items.forEach(reveal);
+    }
+  }
+
+  function applyTilt(){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      if(card.dataset.ceTiltReady) return;
+      card.dataset.ceTiltReady = '1';
+      var inner = card.querySelector('[data-tilt-inner]');
+      if(!inner) return;
+      var depths = inner.querySelectorAll('[data-depth]');
+      var baseT = [];
+      depths.forEach(function(d,i){ baseT[i] = d.style.transform || ''; });
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - .5;
+        var py = (e.clientY - r.top)/r.height - .5;
+        inner.style.transform = 'rotateY(' + (px*12) + 'deg) rotateX(' + (-py*12) + 'deg)';
+        depths.forEach(function(d){
+          var dp = parseFloat(d.dataset.depth) || 0;
+          d.style.transform = 'translateZ(' + dp + 'px) translate(' + (px*dp*0.5) + 'px, ' + (py*dp*0.5) + 'px)';
+        });
+      });
+      card.addEventListener('mouseleave', function(){
+        inner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        depths.forEach(function(d,i){ d.style.transform = baseT[i]; });
+      });
+    });
+  }
+
+  function applyResponsive(){
+    var mobile = window.innerWidth <= 760;
+    document.querySelectorAll('[data-sticky]').forEach(function(sticky){
+      sticky.style.display = mobile ? 'block' : 'none';
+    });
+    document.querySelectorAll('[data-navlinks]').forEach(function(nl){
+      nl.style.display = mobile ? 'none' : 'flex';
+    });
+  }
+
+  function init(){
+    document.querySelectorAll('.ce-shopify-page, .ce-shopify-block').forEach(function(root){
+      root.style.setProperty('--accent', root.style.getPropertyValue('--accent') || '#ffd84a');
+      root.style.setProperty('--green', root.style.getPropertyValue('--green') || '#18c964');
+      root.style.setProperty('--green2', root.style.getPropertyValue('--green2') || '#0aa650');
+      root.style.setProperty('--red', root.style.getPropertyValue('--red') || '#ff3d4e');
+      root.style.setProperty('--muted', root.style.getPropertyValue('--muted') || '#a9b3c9');
+      root.style.setProperty('--mono', "'Montserrat',Arial,sans-serif");
+    });
+    applyHover();
+    applyReveal();
+    applyTilt();
+    applyResponsive();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  }else{
+    init();
+  }
+  window.addEventListener('resize', applyResponsive);
+})();
+</script>
+</head><body style="margin:0;background:#050713;"><div class="ce-shopify-page" data-root="" style="--accent:#ffd84a;--green:#18c964;--green2:#0aa650;--red:#ff3d4e;--muted:#a9b3c9;--mono:'Montserrat',Arial,sans-serif;position:relative;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 18% 6%,rgba(95,139,255,.30),transparent 33rem),radial-gradient(circle at 88% 10%,rgba(255,216,74,.16),transparent 27rem),radial-gradient(circle at 50% 58%,rgba(24,201,100,.09),transparent 34rem),linear-gradient(180deg,#050713 0%,#080b1d 40%,#050713 100%);;font-family:'Montserrat',Arial,sans-serif">
+<!-- grid + noise overlays -->
+<div aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 78%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 78%);;font-family:'Montserrat',Arial,sans-serif"></div>
+<div style="position:relative;z-index:2;;font-family:'Montserrat',Arial,sans-serif">
+<!-- TICKER -->
+<div style="overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(10px);;font-family:'Montserrat',Arial,sans-serif">
+<div style="display:inline-flex;animation:mq 30s linear infinite;will-change:transform;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:30px;padding:9px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">
+<span>🚚 Envío gratis a toda Colombia</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>💵 Pago contraentrega</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>🛡 Garantía 3 meses</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>⏱ Reparás en menos de 2 minutos</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>★★★★★ +1.200 clientes</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span>
+</span>
+<span style="display:inline-flex;align-items:center;gap:30px;padding:9px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;">
+<span>🚚 Envío gratis a toda Colombia</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>💵 Pago contraentrega</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>🛡 Garantía 3 meses</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>⏱ Reparás en menos de 2 minutos</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span><span>★★★★★ +1.200 clientes</span><span style="color:var(--accent,#ffd84a);font-family:'Montserrat',Arial,sans-serif">✦</span>
+</span>
+</div>
+</div>
+<!-- NAV -->
+<div style="position:sticky;top:16px;z-index:50;margin-top:18px;;font-family:'Montserrat',Arial,sans-serif">
+<nav style="display:flex;align-items:center;justify-content:space-between;gap:14px;width:min(960px,calc(100% - 32px));margin:0 auto;padding:10px 10px 10px 18px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:linear-gradient(180deg,rgba(20,24,42,.82),rgba(8,11,29,.66));backdrop-filter:blur(22px);box-shadow:0 24px 80px rgba(0,0,0,.4);;font-family:'Montserrat',Arial,sans-serif">
+<a href="#inicio" style="display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.02em;;font-family:'Montserrat',Arial,sans-serif">
+<span style="width: 27px; height: 27px; border-radius: 9px; background: conic-gradient(from 220deg,var(--accent,#ffd84a),#ff6a00,var(--red),#9b5cff,#5f8bff,var(--accent,#ffd84a)); box-shadow: 0 0 24px rgba(255,216,74,.3); overflow: auto;font-family:'Montserrat',Arial,sans-serif"></span>
+<span>COMPRA EXACTA</span>
+</a>
+<div data-navlinks="" style="display:flex;align-items:center;gap:2px;font-size:13px;color:var(--muted);;font-family:'Montserrat',Arial,sans-serif">
+<a href="#kit" style="padding:9px 12px;border-radius:999px;;font-family:'Montserrat',Arial,sans-serif" style-hover="background:rgba(255,255,255,.09);color:#fff;">Kit</a>
+<a href="#como" style="padding:9px 12px;border-radius:999px;;font-family:'Montserrat',Arial,sans-serif" style-hover="background:rgba(255,255,255,.09);color:#fff;">Cómo funciona</a>
+<a href="#oferta" style="padding:9px 12px;border-radius:999px;;font-family:'Montserrat',Arial,sans-serif" style-hover="background:rgba(255,255,255,.09);color:#fff;">Ofertas</a>
+<a href="#faq" style="padding:9px 12px;border-radius:999px;;font-family:'Montserrat',Arial,sans-serif" style-hover="background:rgba(255,255,255,.09);color:#fff;">FAQ</a>
+</div>
+<a href="#oferta" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#050713;border-radius:999px;padding:12px 18px;font-size:13px;font-weight:900;box-shadow:0 10px 30px rgba(255,255,255,.14);;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-1px);">Pedir ahora →</a>
+</nav>
+</div>
+<!-- HERO -->
+<section id="inicio" style="position:relative;padding:78px 0 56px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.28);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">🇨🇴 Envío gratis a toda Colombia</span>
+<h1 style="font-family:var(--mono);font-size:clamp(44px,7vw,92px);line-height:.9;margin:20px 0 18px;letter-spacing:-.05em;">Repara tu llanta pinchada en <span style="background:linear-gradient(90deg,#fff 0%,var(--accent,#ffd84a) 32%,#ff8d2b 54%,#fff 72%,var(--accent,#ffd84a) 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5.5s linear infinite;;font-family:'Montserrat',Arial,sans-serif">menos de 2 minutos</span></h1>
+<p style="max-width:560px;color:var(--muted);font-size:clamp(16px,2vw,20px);line-height:1.7;;font-family:'Montserrat',Arial,sans-serif">Sin grúa, sin desmontar la rueda y sin perder horas buscando taller. Lleva el kit en la guantera y paga cuando lo recibes.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;;font-family:'Montserrat',Arial,sans-serif">
+<a href="#oferta" style="display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:16px 22px;font-weight:900;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;box-shadow:0 18px 50px rgba(255,216,74,.25);transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">🛒 Quiero mi kit por $32.299</a>
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20pedir%20el%20Kit%20Compra%20Exacta.%20Pago%20contraentrega." style="display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:16px 22px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;box-shadow:0 18px 50px rgba(24,201,100,.22);transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">💬 WhatsApp</a>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;color:var(--muted);font-size:13px;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:9px 12px;;font-family:'Montserrat',Arial,sans-serif">Pago Seguro con Mercadolibre</span><span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:9px 12px;;font-family:'Montserrat',Arial,sans-serif">💵 Pagas al recibir</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:9px 12px;;font-family:'Montserrat',Arial,sans-serif">🚚 24–72 h</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:9px 12px;;font-family:'Montserrat',Arial,sans-serif">🛡 Garantía 3 meses</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);border-radius:999px;padding:9px 12px;;font-family:'Montserrat',Arial,sans-serif">★★★★★ +1.200 clientes</span>
+</div>
+</div>
+<!-- 3D PHOTO CARD -->
+<div data-reveal="" data-tilt="" style="opacity:0;transition:opacity .8s ease .15s;perspective:1100px;;font-family:'Montserrat',Arial,sans-serif">
+<div data-tilt-inner="" style="position:relative;transform-style:preserve-3d;transition:transform .18s ease-out;border-radius:34px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.19);backdrop-filter:blur(22px);box-shadow:0 32px 95px rgba(0,0,0,.52);;font-family:'Montserrat',Arial,sans-serif">
+<div style="position:absolute;top:-60px;right:-70px;width:280px;height:280px;border-radius:50%;background:rgba(255,216,74,.26);filter:blur(48px);pointer-events:none;;font-family:'Montserrat',Arial,sans-serif"></div>
+<div style="position:absolute;left:-70px;bottom:-80px;width:320px;height:320px;border-radius:50%;background:rgba(95,139,255,.26);filter:blur(58px);pointer-events:none;;font-family:'Montserrat',Arial,sans-serif"></div>
+<div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;font-size:12px;font-weight:800;padding:2px 4px 14px;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:flex;gap:6px;;font-family:'Montserrat',Arial,sans-serif"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);font-family:'Montserrat',Arial,sans-serif"></span><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);font-family:'Montserrat',Arial,sans-serif"></span><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);font-family:'Montserrat',Arial,sans-serif"></span></span>
+<span style="font-family:var(--mono);letter-spacing:.04em;">Kit sellador tubeless</span>
+</div>
+<div style="position:relative;z-index:2;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 22px 60px rgba(0,0,0,.45);;font-family:'Montserrat',Arial,sans-serif">
+<img alt="Tornillo de goma insertándose en el neumático" src="assets/ce-tornillo-neumatico.png" style="width:100%;aspect-ratio:1/1;object-fit:cover;;font-family:'Montserrat',Arial,sans-serif"/>
+</div>
+<div style="position:relative;z-index:2;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;;font-family:'Montserrat',Arial,sans-serif">🔩 10 grandes</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;;font-family:'Montserrat',Arial,sans-serif">🔩 10 pequeños</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;;font-family:'Montserrat',Arial,sans-serif">🪛 Insertor incluido</span>
+<span style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;;font-family:'Montserrat',Arial,sans-serif">🧰 Caja compacta</span>
+</div>
+<!-- floating depth chips -->
+<div data-depth="80" style="position:absolute;z-index:4;left:-22px;top:88px;transform:translateZ(80px);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border-radius:18px;padding:12px 14px;box-shadow:0 18px 50px rgba(0,0,0,.3);;font-family:'Montserrat',Arial,sans-serif">
+<b style="display:block;font-size:18px;;font-family:'Montserrat',Arial,sans-serif">&lt; 2 min</b><span style="font-size:11px;color:rgba(255,255,255,.74);;font-family:'Montserrat',Arial,sans-serif">por pinchazo</span>
+</div>
+<div data-depth="95" style="position:absolute;z-index:4;right:-18px;bottom:108px;transform:translateZ(95px);border-radius:18px;padding:12px 14px;background:rgba(255,216,74,.94);color:#071025;box-shadow:0 18px 50px rgba(255,216,74,.3);;font-family:'Montserrat',Arial,sans-serif">
+<b data-anchor="" style="display:block;font-size:18px;;font-family:'Montserrat',Arial,sans-serif">−34%</b><span style="font-size:11px;color:rgba(7,16,37,.72);;font-family:'Montserrat',Arial,sans-serif">oferta hoy</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TRUST STRIP -->
+<div style="padding:16px 0;border-top:1px solid rgba(255,255,255,.10);border-bottom:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);backdrop-filter:blur(18px);;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 26px;color:var(--muted);font-size:14px;;font-family:'Montserrat',Arial,sans-serif">
+<span>🔒 <b style="color:#fff;;font-family:'Montserrat',Arial,sans-serif">Pago seguro</b></span>
+<span>💵 <b style="color:#fff;;font-family:'Montserrat',Arial,sans-serif">Contraentrega</b></span>
+<span>🚚 <b style="color:#fff;;font-family:'Montserrat',Arial,sans-serif">Envío gratis</b></span>
+<span>🛞 <b style="color:#fff;;font-family:'Montserrat',Arial,sans-serif">Para tubeless</b></span>
+<span>🛡 <b style="color:#fff;;font-family:'Montserrat',Arial,sans-serif">Garantía 3 meses</b></span>
+</div>
+</div>
+<!-- PROBLEMA -->
+<section style="padding:76px 0;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.25);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Problema real</span>
+<h2 style="font-family:var(--mono);font-size:clamp(32px,5vw,58px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">Un pinchazo no debería dañarte el día.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.75;max-width:720px;;font-family:'Montserrat',Arial,sans-serif">Una grúa puede salir más cara que el kit completo. Y esperar a que aparezca una gomería abierta puede quitarte horas. Compra Exacta está pensado para resolver rápido los pinchazos pequeños cuando estás lejos de ayuda.</p>
+</div>
+<div style="display:grid;grid-template-columns:1.05fr .95fr;gap:24px;margin-top:36px;align-items:stretch;;font-family:'Montserrat',Arial,sans-serif">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;;font-family:'Montserrat',Arial,sans-serif">
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:24px;padding:24px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:22px;background:rgba(255,61,78,.12);border:1px solid rgba(255,61,78,.25);color:#ff7b88;margin-bottom:16px;;font-family:'Montserrat',Arial,sans-serif">✗</div>
+<h3 style="font-size:19px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Grúa costosa</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Terminas pagando mucho por un problema pequeño y urgente.</p>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease .08s;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:24px;padding:24px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:22px;background:rgba(255,61,78,.12);border:1px solid rgba(255,61,78,.25);color:#ff7b88;margin-bottom:16px;;font-family:'Montserrat',Arial,sans-serif">✗</div>
+<h3 style="font-size:19px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Taller lejos</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Pierdes tiempo buscando una opción abierta o esperando asistencia.</p>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease .16s;grid-column:1/-1;border:1px solid rgba(24,201,100,.3);background:linear-gradient(180deg,rgba(24,201,100,.12),rgba(255,255,255,.045));border-radius:24px;padding:24px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:22px;background:rgba(24,201,100,.14);border:1px solid rgba(24,201,100,.3);color:var(--green);margin-bottom:16px;;font-family:'Montserrat',Arial,sans-serif">✓</div>
+<h3 style="font-size:19px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Kit en la guantera</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Lo llevas contigo para actuar rápido cuando el pinchazo sea reparable. Sin depender de nadie.</p>
+</article>
+</div>
+<div data-reveal="" data-tilt="" style="opacity:0;transition:opacity .7s ease .1s;perspective:1100px;;font-family:'Montserrat',Arial,sans-serif">
+<div data-tilt-inner="" style="transition:transform .18s ease-out;transform-style:preserve-3d;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:0 32px 95px rgba(0,0,0,.5);height:100%;min-height:340px;background:#000;;font-family:'Montserrat',Arial,sans-serif">
+<img alt="Neumático pinchado en la vía" src="assets/ce-neumatico-pinchado.png" style="width:100%;height:100%;object-fit:cover;;font-family:'Montserrat',Arial,sans-serif"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- KIT -->
+<section id="kit" style="padding:76px 0;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;display:grid;grid-template-columns:.92fr 1.08fr;gap:34px;align-items:center;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.25);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Qué incluye</span>
+<h2 style="font-family:var(--mono);font-size:clamp(30px,4.4vw,52px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">20 piezas + 1 destornillador insertor.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.7;;font-family:'Montserrat',Arial,sans-serif">Un kit compacto para carro, moto, camioneta, cuatrimoto o bicicleta con llanta sin cámara.</p>
+<div data-tilt="" style="perspective:1100px;margin-top:26px;;font-family:'Montserrat',Arial,sans-serif">
+<div data-tilt-inner="" style="transition:transform .18s ease-out;transform-style:preserve-3d;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:#fff;box-shadow:0 28px 70px rgba(0,0,0,.45);;font-family:'Montserrat',Arial,sans-serif">
+<img alt="Kit completo: tornillos de goma, tubos y destornillador" src="assets/ce-kit-completo.png" style="width:100%;;font-family:'Montserrat',Arial,sans-serif"/>
+</div>
+</div>
+</div>
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease .1s;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));border-radius:34px;padding:28px;box-shadow:0 32px 95px rgba(0,0,0,.4);;font-family:'Montserrat',Arial,sans-serif">
+<div style="display:grid;gap:14px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);border-radius:20px;;font-family:'Montserrat',Arial,sans-serif"><span style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#ffd84a);color:#071025;font-weight:900;flex:0 0 auto;;font-family:'Montserrat',Arial,sans-serif">✓</span><div><b>10 tornillos grandes</b><span style="display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.45;;font-family:'Montserrat',Arial,sans-serif">1,50 cm × 0,66 cm · para pinchazos de 3,5 a 5 mm.</span></div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);border-radius:20px;;font-family:'Montserrat',Arial,sans-serif"><span style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#ffd84a);color:#071025;font-weight:900;flex:0 0 auto;;font-family:'Montserrat',Arial,sans-serif">✓</span><div><b>10 tornillos pequeños</b><span style="display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.45;;font-family:'Montserrat',Arial,sans-serif">1,19 cm × 0,53 cm · para pinchazos cercanos a 3 mm.</span></div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);border-radius:20px;;font-family:'Montserrat',Arial,sans-serif"><span style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#ffd84a);color:#071025;font-weight:900;flex:0 0 auto;;font-family:'Montserrat',Arial,sans-serif">✓</span><div><b>1 destornillador insertor</b><span style="display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.45;;font-family:'Montserrat',Arial,sans-serif">Herramienta incluida para que no tengas que comprar nada adicional.</span></div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);border-radius:20px;;font-family:'Montserrat',Arial,sans-serif"><span style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--accent,#ffd84a);color:#071025;font-weight:900;flex:0 0 auto;;font-family:'Montserrat',Arial,sans-serif">✓</span><div><b>Caja transparente</b><span style="display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.45;;font-family:'Montserrat',Arial,sans-serif">Fácil de guardar en la guantera o en el baúl de la moto.</span></div></div>
+</div>
+</div>
+</div>
+</section>
+<!-- COMO FUNCIONA -->
+<section id="como" style="padding:76px 0;text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.25);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Rápido y simple</span>
+<h2 style="font-family:var(--mono);font-size:clamp(32px,5vw,58px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">Reparar es así de fácil.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.75;max-width:720px;margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">Primero, estaciónate en un lugar seguro. Luego usa el tamaño correcto para el pinchazo. Si el daño es grande, lateral o la llanta está muy deteriorada, revisa con un profesional.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;text-align:left;;font-family:'Montserrat',Arial,sans-serif">
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:28px;padding:26px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;display:grid;place-items:center;font-size:22px;font-weight:900;font-family:var(--mono);margin-bottom:18px;">1</div>
+<h3 style="font-size:20px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Elige el tamaño</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Grande para perforaciones mayores y pequeño para perforaciones más finas.</p>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease .1s;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:28px;padding:26px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;display:grid;place-items:center;font-size:22px;font-weight:900;font-family:var(--mono);margin-bottom:18px;">2</div>
+<h3 style="font-size:20px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Inserta y sella</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">El tornillo entra en el punto del pinchazo y ayuda a sellar la salida de aire.</p>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease .2s;border:1px solid rgba(255,255,255,.13);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:28px;padding:26px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;display:grid;place-items:center;font-size:22px;font-weight:900;font-family:var(--mono);margin-bottom:18px;">3</div>
+<h3 style="font-size:20px;margin-bottom:8px;;font-family:'Montserrat',Arial,sans-serif">Infla y continúa</h3><p style="color:var(--muted);line-height:1.6;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Verifica la presión de la llanta antes de seguir rodando.</p>
+</article>
+</div>
+</div>
+</section>
+<!-- COMPATIBILIDAD -->
+<section style="padding:30px 0 76px;text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.25);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Compatibilidad</span>
+<h2 style="font-family:var(--mono);font-size:clamp(30px,4.4vw,52px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">Para llantas sin cámara.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.75;max-width:720px;margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">Ideal para tenerlo a mano en trayectos diarios, viajes, domicilios, rutas y carretera.</p>
+</div>
+<div data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;margin-top:32px;;font-family:'Montserrat',Arial,sans-serif">
+<div style="min-width:120px;text-align:center;padding:18px 16px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);;font-family:'Montserrat',Arial,sans-serif"><span style="font-size:34px;display:block;;font-family:'Montserrat',Arial,sans-serif">🚗</span><b style="display:block;margin-top:8px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Carro</b></div>
+<div style="min-width:120px;text-align:center;padding:18px 16px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);;font-family:'Montserrat',Arial,sans-serif"><span style="font-size:34px;display:block;;font-family:'Montserrat',Arial,sans-serif">🏍</span><b style="display:block;margin-top:8px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Moto</b></div>
+<div style="min-width:120px;text-align:center;padding:18px 16px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);;font-family:'Montserrat',Arial,sans-serif"><span style="font-size:34px;display:block;;font-family:'Montserrat',Arial,sans-serif">🛻</span><b style="display:block;margin-top:8px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Camioneta</b></div>
+<div style="min-width:120px;text-align:center;padding:18px 16px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);;font-family:'Montserrat',Arial,sans-serif"><span style="font-size:34px;display:block;;font-family:'Montserrat',Arial,sans-serif">🏎</span><b style="display:block;margin-top:8px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Cuatrimoto</b></div>
+<div style="min-width:120px;text-align:center;padding:18px 16px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);;font-family:'Montserrat',Arial,sans-serif"><span style="font-size:34px;display:block;;font-family:'Montserrat',Arial,sans-serif">🚴</span><b style="display:block;margin-top:8px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Bicicleta</b></div>
+</div>
+</div>
+</section>
+<!-- OFERTA / PRICING -->
+<section id="oferta" style="padding:76px 0;text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;background:rgba(255,61,78,.13);border:1px solid rgba(255,61,78,.32);color:#ffb0b7;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Oferta de lanzamiento</span>
+<h2 style="font-family:var(--mono);font-size:clamp(32px,5vw,58px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">Entre más kits, más ahorras.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.75;max-width:720px;margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">Todos los planes incluyen envío gratis y pago contraentrega en Colombia.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;text-align:left;;font-family:'Montserrat',Arial,sans-serif">
+<article data-reveal="" style="opacity:0;transform:translateY(26px);transition:all .6s ease;display:flex;flex-direction:column;padding:26px;border-radius:32px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.05));box-shadow:0 25px 70px rgba(0,0,0,.24);;font-family:'Montserrat',Arial,sans-serif">
+<span style="font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Para empezar</span>
+<h3 style="font-size:29px;margin:8px 0 4px;;font-family:'Montserrat',Arial,sans-serif">1 KIT</h3>
+<p style="color:var(--muted);font-size:14px;margin-bottom:20px;;font-family:'Montserrat',Arial,sans-serif">20 piezas + 1 destornillador</p>
+<p style="font-size:44px;letter-spacing:-.05em;font-weight:900;color:#fff;font-family:var(--mono);">$32.299</p>
+<div data-anchor="" style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px;margin-top:4px;;font-family:'Montserrat',Arial,sans-serif"><s style="opacity:.75;;font-family:'Montserrat',Arial,sans-serif">$48.980</s><span style="font-size:10px;background:var(--red);padding:3px 7px;border-radius:7px;color:#fff;font-weight:900;;font-family:'Montserrat',Arial,sans-serif">-34%</span></div>
+<p style="font-size:12px;color:var(--muted);margin-top:7px;;font-family:'Montserrat',Arial,sans-serif">$32.299 por kit</p>
+<ul style="list-style:none;margin:22px 0;display:grid;gap:11px;font-size:14px;color:#e6ebf7;;font-family:'Montserrat',Arial,sans-serif">
+<li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Envío gratis</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Pago contraentrega</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Llega en 24–72 h</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Garantía 3 meses</li>
+</ul>
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%201%20kit%20Compra%20Exacta%20por%20%2432.299%20con%20env%C3%ADo%20gratis.%20Pago%20contraentrega." style="margin-top:auto;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:999px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">💬 Pedir 1 kit</a>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(26px);transition:all .6s ease .1s;display:flex;flex-direction:column;padding:26px;border-radius:32px;border:2px solid var(--accent,#ffd84a);background:linear-gradient(180deg,rgba(255,216,74,.18),rgba(255,255,255,.07));box-shadow:0 0 0 1px rgba(255,216,74,.22),0 20px 70px rgba(255,216,74,.16);position:relative;;font-family:'Montserrat',Arial,sans-serif">
+<span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--accent,#ffd84a);color:#071025;border-radius:999px;padding:7px 12px;font-size:10px;font-weight:900;letter-spacing:.12em;;font-family:'Montserrat',Arial,sans-serif">MÁS POPULAR</span>
+<span style="font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Para ti y un familiar</span>
+<h3 style="font-size:29px;margin:8px 0 4px;;font-family:'Montserrat',Arial,sans-serif">2 KITS</h3>
+<p style="color:var(--muted);font-size:14px;margin-bottom:20px;;font-family:'Montserrat',Arial,sans-serif">40 piezas + 2 destornilladores</p>
+<p style="font-size:44px;letter-spacing:-.05em;font-weight:900;color:var(--accent,#ffd84a);font-family:var(--mono);">$54.900</p>
+<div data-anchor="" style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px;margin-top:4px;;font-family:'Montserrat',Arial,sans-serif"><s style="opacity:.75;;font-family:'Montserrat',Arial,sans-serif">$64.598</s><span style="font-size:10px;background:var(--red);padding:3px 7px;border-radius:7px;color:#fff;font-weight:900;;font-family:'Montserrat',Arial,sans-serif">-15%</span></div>
+<p style="font-size:12px;color:var(--muted);margin-top:7px;;font-family:'Montserrat',Arial,sans-serif">$27.450 por kit</p>
+<ul style="list-style:none;margin:22px 0;display:grid;gap:11px;font-size:14px;color:#e6ebf7;;font-family:'Montserrat',Arial,sans-serif">
+<li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Mejor balance precio/cantidad</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Envío gratis</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Pago contraentrega</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Garantía 3 meses</li>
+</ul>
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%202%20kits%20Compra%20Exacta%20con%2015%25%20OFF%20(%2454.900)%20y%20env%C3%ADo%20gratis." style="margin-top:auto;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:999px;font-weight:900;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">💬 Pedir 2 kits</a>
+</article>
+<article data-reveal="" style="opacity:0;transform:translateY(26px);transition:all .6s ease .2s;display:flex;flex-direction:column;padding:26px;border-radius:32px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.05));box-shadow:0 25px 70px rgba(0,0,0,.24);position:relative;;font-family:'Montserrat',Arial,sans-serif">
+<span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(255,255,255,.92);color:#071025;border-radius:999px;padding:7px 12px;font-size:10px;font-weight:900;letter-spacing:.12em;;font-family:'Montserrat',Arial,sans-serif">AHORRA MÁS</span>
+<span style="font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Mejor precio por kit</span>
+<h3 style="font-size:29px;margin:8px 0 4px;;font-family:'Montserrat',Arial,sans-serif">3 KITS</h3>
+<p style="color:var(--muted);font-size:14px;margin-bottom:20px;;font-family:'Montserrat',Arial,sans-serif">60 piezas + 3 destornilladores</p>
+<p style="font-size:44px;letter-spacing:-.05em;font-weight:900;color:#fff;font-family:var(--mono);">$77.500</p>
+<div data-anchor="" style="display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px;margin-top:4px;;font-family:'Montserrat',Arial,sans-serif"><s style="opacity:.75;;font-family:'Montserrat',Arial,sans-serif">$96.897</s><span style="font-size:10px;background:var(--red);padding:3px 7px;border-radius:7px;color:#fff;font-weight:900;;font-family:'Montserrat',Arial,sans-serif">-20%</span></div>
+<p style="font-size:12px;color:var(--muted);margin-top:7px;;font-family:'Montserrat',Arial,sans-serif">$25.833 por kit</p>
+<ul style="list-style:none;margin:22px 0;display:grid;gap:11px;font-size:14px;color:#e6ebf7;;font-family:'Montserrat',Arial,sans-serif">
+<li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Precio más bajo por unidad</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Envío gratis</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Pago contraentrega</li><li style="display:flex;gap:8px;;font-family:'Montserrat',Arial,sans-serif">✓ Garantía 3 meses</li>
+</ul>
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%203%20kits%20Compra%20Exacta%20con%2020%25%20OFF%20(%2477.500)%20y%20env%C3%ADo%20gratis." style="margin-top:auto;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:999px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">💬 Pedir 3 kits</a>
+</article>
+</div>
+<div data-reveal="" style="opacity:0;transform:translateY(22px);transition:all .6s ease;margin-top:22px;border:1px dashed rgba(255,216,74,.6);background:linear-gradient(135deg,rgba(255,216,74,.13),rgba(255,255,255,.05));border-radius:28px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;text-align:left;;font-family:'Montserrat',Arial,sans-serif">
+<div><span style="font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent,#ffd84a);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Pack mayorista</span><h3 style="margin:5px 0;font-size:24px;;font-family:'Montserrat',Arial,sans-serif">2</h3><p style="margin:0;color:var(--muted);line-height:1.55;;font-family:'Montserrat',Arial,sans-serif">Ideal para talleres, gomerías y revendedores. Total: $640.000.</p></div>
+<a href="https://wa.me/573000000000?text=Hola%2C%20me%20interesa%20el%20pack%20mayorista%20de%2020%20kits%20Compra%20Exacta." style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 22px;font-weight:900;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">Cotizar mayorista</a>
+</div>
+</div>
+</section>
+<!-- DONDE COMPRAR -->
+<section style="padding:20px 0 76px;text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<h2 style="font-family:var(--mono);font-size:clamp(30px,4.4vw,52px);line-height:.98;margin:0 0 15px;letter-spacing:-.05em;">Elige dónde comprar.</h2>
+<p style="color:var(--muted);font-size:17px;line-height:1.75;max-width:720px;margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">Recomendado: WhatsApp con envío gratis y pago al recibir.</p>
+</div>
+<div style="display:grid;gap:14px;max-width:780px;margin:32px auto 0;text-align:left;;font-family:'Montserrat',Arial,sans-serif">
+<a data-reveal="" href="https://wa.me/573000000000?text=Hola%2C%20quiero%201%20kit%20Compra%20Exacta%20por%20%2432.299%20con%20ENV%C3%8DO%20GRATIS%20y%20pago%20contraentrega." style="opacity:0;transform:translateY(20px);transition:all .6s ease;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:22px;border:1px solid rgba(24,201,100,.4);background:linear-gradient(135deg,rgba(24,201,100,.16),rgba(255,255,255,.05));;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">
+<div><small style="color:var(--green);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Recomendado ⭐</small><b style="display:block;font-size:18px;margin:3px 0;;font-family:'Montserrat',Arial,sans-serif">Comprar Ahora</b></div><span style="color:var(--muted);font-size:13px;;font-family:'Montserrat',Arial,sans-serif">Pago por mercadopago ó pago contraentrega y Envío Gratis.</span>
+</a>
+<a data-reveal="" href="https://articulo.mercadolibre.com.co/" rel="noopener" style="opacity: 0; transform: translateY(20px); transition: all .6s ease .08s; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(255,216,74,.35); background: linear-gradient(135deg, #ffffff1f, #0000000d);font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);" target="_blank">
+<div><small style="color:var(--accent,#ffd84a);font-weight:900;;font-family:'Montserrat',Arial,sans-serif">Opción 2</small><b style="display:block;font-size:18px;margin:3px 0;;font-family:'Montserrat',Arial,sans-serif">Comprar por Mercado Libre</b></div><span style="color: var(--muted); font-size: 13px; width: 242px; height: 23px;font-family:'Montserrat',Arial,sans-serif">Envío aparte · Pago por mercadopago</span>
+</a>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section id="faq" style="padding:76px 0;text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;;font-family:'Montserrat',Arial,sans-serif">
+<span style="display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;border:1px solid rgba(255,216,74,.25);background:rgba(255,216,74,.10);color:var(--accent,#ffd84a);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;;font-family:'Montserrat',Arial,sans-serif">Dudas frecuentes</span>
+<h2 style="font-family:var(--mono);font-size:clamp(32px,5vw,58px);line-height:.98;margin:15px 0;letter-spacing:-.05em;">Preguntas frecuentes.</h2>
+</div>
+<div style="max-width:800px;margin:32px auto 0;display:grid;gap:12px;text-align:left;;font-family:'Montserrat',Arial,sans-serif">
+<details data-reveal="" style="opacity:0;transform:translateY(18px);transition:all .5s ease;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:22px;padding:20px;;font-family:'Montserrat',Arial,sans-serif"><summary style="cursor:pointer;font-weight:800;display:flex;justify-content:space-between;gap:20px;list-style:none;;font-family:'Montserrat',Arial,sans-serif">¿Funciona en cualquier llanta?<span style="color:var(--accent,#ffd84a);font-size:22px;;font-family:'Montserrat',Arial,sans-serif">+</span></summary><p style="color:var(--muted);line-height:1.7;margin-top:14px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Funciona en llantas sin cámara, también llamadas tubeless. Sirve para carro, moto, camioneta, cuatrimoto o bici cuando el pinchazo es compatible con el tamaño del tornillo.</p></details>
+<details data-reveal="" style="opacity:0;transform:translateY(18px);transition:all .5s ease .05s;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:22px;padding:20px;;font-family:'Montserrat',Arial,sans-serif"><summary style="cursor:pointer;font-weight:800;display:flex;justify-content:space-between;gap:20px;list-style:none;;font-family:'Montserrat',Arial,sans-serif">¿Cuánto dura la reparación?<span style="color:var(--accent,#ffd84a);font-size:22px;;font-family:'Montserrat',Arial,sans-serif">+</span></summary><p style="color:var(--muted);line-height:1.7;margin-top:14px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Los tornillos son autovulcanizantes. Aun así, para mayor tranquilidad recomendamos revisar la llanta con un profesional en la próxima oportunidad.</p></details>
+<details data-reveal="" style="opacity:0;transform:translateY(18px);transition:all .5s ease .1s;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:22px;padding:20px;;font-family:'Montserrat',Arial,sans-serif"><summary style="cursor:pointer;font-weight:800;display:flex;justify-content:space-between;gap:20px;list-style:none;;font-family:'Montserrat',Arial,sans-serif">¿Cómo es el pago contraentrega?<span style="color:var(--accent,#ffd84a);font-size:22px;;font-family:'Montserrat',Arial,sans-serif">+</span></summary><p style="color:var(--muted);line-height:1.7;margin-top:14px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Confirmamos tu pedido por WhatsApp, enviamos por transportadora y pagas cuando recibas el paquete.</p></details>
+<details data-reveal="" style="opacity:0;transform:translateY(18px);transition:all .5s ease .15s;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:22px;padding:20px;;font-family:'Montserrat',Arial,sans-serif"><summary style="cursor:pointer;font-weight:800;display:flex;justify-content:space-between;gap:20px;list-style:none;;font-family:'Montserrat',Arial,sans-serif">¿Cuánto tarda el envío?<span style="color:var(--accent,#ffd84a);font-size:22px;;font-family:'Montserrat',Arial,sans-serif">+</span></summary><p style="color:var(--muted);line-height:1.7;margin-top:14px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Entre 24 y 72 horas hábiles a principales ciudades de Colombia. Zonas apartadas pueden tardar un poco más.</p></details>
+<details data-reveal="" style="opacity:0;transform:translateY(18px);transition:all .5s ease .2s;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);border-radius:22px;padding:20px;;font-family:'Montserrat',Arial,sans-serif"><summary style="cursor:pointer;font-weight:800;display:flex;justify-content:space-between;gap:20px;list-style:none;;font-family:'Montserrat',Arial,sans-serif">¿Tiene garantía?<span style="color:var(--accent,#ffd84a);font-size:22px;;font-family:'Montserrat',Arial,sans-serif">+</span></summary><p style="color:var(--muted);line-height:1.7;margin-top:14px;font-size:14px;;font-family:'Montserrat',Arial,sans-serif">Sí. Tiene 3 meses de garantía. Si el producto llega defectuoso, se reemplaza sin costo.</p></details>
+</div>
+</div>
+</section>
+<!-- FINAL CTA -->
+<section style="padding:88px 0;background:radial-gradient(circle at 50% 0%,rgba(255,216,74,.22),transparent 34rem),linear-gradient(180deg,rgba(255,255,255,.05),transparent);border-top:1px solid rgba(255,255,255,.10);text-align:center;;font-family:'Montserrat',Arial,sans-serif">
+<div data-reveal="" style="opacity:0;transform:translateY(24px);transition:all .7s ease;max-width:900px;margin:0 auto;width:calc(100% - 32px);;font-family:'Montserrat',Arial,sans-serif">
+<h2 style="font-family:var(--mono);font-size:clamp(36px,6vw,76px);line-height:.92;letter-spacing:-.055em;margin-bottom:18px;">No vuelvas a quedarte tirado por un <span style="background:linear-gradient(90deg,#fff 0%,var(--accent,#ffd84a) 32%,#ff8d2b 54%,#fff 72%,var(--accent,#ffd84a) 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5.5s linear infinite;;font-family:'Montserrat',Arial,sans-serif">pinchazo</span>.</h2>
+<p style="color:var(--muted);font-size:18px;line-height:1.7;margin:0 auto;max-width:650px;;font-family:'Montserrat',Arial,sans-serif">Pide tu kit hoy. Pagas cuando lo recibes. Envío gratis a toda Colombia.</p>
+<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px;;font-family:'Montserrat',Arial,sans-serif">
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20pedir%20el%20Kit%20Compra%20Exacta%20por%20%2432.299%20con%20env%C3%ADo%20gratis%20y%20pago%20contraentrega." style="display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:16px 28px;font-weight:900;background:linear-gradient(135deg,var(--accent,#ffd84a),#ffb923);color:#071025;box-shadow:0 18px 50px rgba(255,216,74,.25);transition:transform .2s;;font-family:'Montserrat',Arial,sans-serif" style-hover="transform:translateY(-2px);">💬 Pedir ahora por WhatsApp</a>
+</div>
+<div style="display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin-top:22px;color:var(--muted);font-size:13px;;font-family:'Montserrat',Arial,sans-serif"><span>🔒 Pago seguro</span><span>💵 Pagas al recibir</span><span>🚚 Envío 24–72 h</span></div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer style="padding:28px 0 96px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.08);;font-family:'Montserrat',Arial,sans-serif">
+<div style="width:min(1120px,calc(100% - 32px));margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;;font-family:'Montserrat',Arial,sans-serif">
+<span>Compra Exacta · Kit sellador tubeless</span><span>Colombia · WhatsApp ventas</span>
+</div>
+</footer>
+</div>
+<!-- STICKY MOBILE -->
+<div data-sticky="" style="display:none;position:fixed;z-index:70;left:12px;right:12px;bottom:12px;;font-family:'Montserrat',Arial,sans-serif">
+<a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20pedir%20el%20Kit%20Compra%20Exacta." style="display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;padding:16px 18px;font-weight:900;animation:pulse 2.2s ease-in-out infinite;;font-family:'Montserrat',Arial,sans-serif">💬 Pedir por WhatsApp · $32.299</a>
+</div>
+</div></body></html>

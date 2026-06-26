@@ -1,0 +1,180 @@
+<!-- PEGAR UNA SOLA VEZ ANTES DE LOS BLOQUES -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --accent:#ffd84a;
+    --green:#18c964;
+    --green2:#0aa650;
+    --red:#ff3d4e;
+    --muted:#a9b3c9;
+    --mono:'Montserrat',Arial,sans-serif;
+  }
+
+  .ce-shopify-page,
+  .ce-shopify-block{
+    font-family:'Montserrat',Arial,sans-serif !important;
+    color:#f8fafc;
+    background:#050713;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .ce-shopify-page *,
+  .ce-shopify-block *{
+    font-family:'Montserrat',Arial,sans-serif !important;
+    box-sizing:border-box;
+  }
+
+  .ce-shopify-page a,
+  .ce-shopify-block a{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .ce-shopify-page img,
+  .ce-shopify-block img{
+    display:block;
+    max-width:100%;
+    height:auto;
+  }
+
+  .ce-shopify-page summary::-webkit-details-marker,
+  .ce-shopify-block summary::-webkit-details-marker{display:none}
+
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes shine{to{background-position:220% center}}
+  @keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(1.5deg)}}
+  @keyframes pulse{0%,100%{transform:translateY(0);box-shadow:0 18px 54px rgba(0,0,0,.4)}50%{transform:translateY(-3px);box-shadow:0 24px 70px rgba(24,201,100,.4)}}
+
+  @media(max-width:760px){
+    .ce-shopify-page [data-navlinks],
+    .ce-shopify-block [data-navlinks]{display:none !important;}
+
+    .ce-shopify-page [data-sticky],
+    .ce-shopify-block [data-sticky]{display:block !important;}
+
+    .ce-shopify-page section > div[style*="display:grid"],
+    .ce-shopify-block section > div[style*="display:grid"]{
+      grid-template-columns:1fr !important;
+      gap:24px !important;
+    }
+
+    .ce-shopify-page div[style*="grid-template-columns:1fr 1fr 1fr"],
+    .ce-shopify-block div[style*="grid-template-columns:1fr 1fr 1fr"],
+    .ce-shopify-page div[style*="grid-template-columns:repeat(3"],
+    .ce-shopify-block div[style*="grid-template-columns:repeat(3"]{
+      grid-template-columns:1fr !important;
+    }
+
+    .ce-shopify-page div[style*="grid-template-columns:repeat(5"],
+    .ce-shopify-block div[style*="grid-template-columns:repeat(5"]{
+      grid-template-columns:1fr 1fr !important;
+    }
+
+    .ce-shopify-page nav,
+    .ce-shopify-block nav{
+      top:10px !important;
+      width:calc(100% - 22px) !important;
+    }
+  }
+</style>
+
+<script>
+(function(){
+  function applyHover(){
+    document.querySelectorAll('[style-hover]').forEach(function(el){
+      if(el.dataset.ceHoverReady) return;
+      el.dataset.ceHoverReady = '1';
+      el.addEventListener('mouseenter', function(){
+        el.dataset.cePrevStyle = el.getAttribute('style') || '';
+        el.setAttribute('style', (el.dataset.cePrevStyle || '') + ';' + (el.getAttribute('style-hover') || ''));
+      });
+      el.addEventListener('mouseleave', function(){
+        if(typeof el.dataset.cePrevStyle !== 'undefined'){
+          el.setAttribute('style', el.dataset.cePrevStyle);
+          delete el.dataset.cePrevStyle;
+        }
+      });
+    });
+  }
+
+  function applyReveal(){
+    var items = document.querySelectorAll('[data-reveal]');
+    var reveal = function(el){ el.style.opacity = 1; el.style.transform = 'none'; };
+    try{
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            reveal(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.08, rootMargin:'0px 0px -4% 0px'});
+      items.forEach(function(el){ io.observe(el); });
+      setTimeout(function(){ items.forEach(reveal); }, 900);
+    }catch(e){
+      items.forEach(reveal);
+    }
+  }
+
+  function applyTilt(){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      if(card.dataset.ceTiltReady) return;
+      card.dataset.ceTiltReady = '1';
+      var inner = card.querySelector('[data-tilt-inner]');
+      if(!inner) return;
+      var depths = inner.querySelectorAll('[data-depth]');
+      var baseT = [];
+      depths.forEach(function(d,i){ baseT[i] = d.style.transform || ''; });
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - .5;
+        var py = (e.clientY - r.top)/r.height - .5;
+        inner.style.transform = 'rotateY(' + (px*12) + 'deg) rotateX(' + (-py*12) + 'deg)';
+        depths.forEach(function(d){
+          var dp = parseFloat(d.dataset.depth) || 0;
+          d.style.transform = 'translateZ(' + dp + 'px) translate(' + (px*dp*0.5) + 'px, ' + (py*dp*0.5) + 'px)';
+        });
+      });
+      card.addEventListener('mouseleave', function(){
+        inner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        depths.forEach(function(d,i){ d.style.transform = baseT[i]; });
+      });
+    });
+  }
+
+  function applyResponsive(){
+    var mobile = window.innerWidth <= 760;
+    document.querySelectorAll('[data-sticky]').forEach(function(sticky){
+      sticky.style.display = mobile ? 'block' : 'none';
+    });
+    document.querySelectorAll('[data-navlinks]').forEach(function(nl){
+      nl.style.display = mobile ? 'none' : 'flex';
+    });
+  }
+
+  function init(){
+    document.querySelectorAll('.ce-shopify-page, .ce-shopify-block').forEach(function(root){
+      root.style.setProperty('--accent', root.style.getPropertyValue('--accent') || '#ffd84a');
+      root.style.setProperty('--green', root.style.getPropertyValue('--green') || '#18c964');
+      root.style.setProperty('--green2', root.style.getPropertyValue('--green2') || '#0aa650');
+      root.style.setProperty('--red', root.style.getPropertyValue('--red') || '#ff3d4e');
+      root.style.setProperty('--muted', root.style.getPropertyValue('--muted') || '#a9b3c9');
+      root.style.setProperty('--mono', "'Montserrat',Arial,sans-serif");
+    });
+    applyHover();
+    applyReveal();
+    applyTilt();
+    applyResponsive();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  }else{
+    init();
+  }
+  window.addEventListener('resize', applyResponsive);
+})();
+</script>
