@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Compra Exacta · Repara tu llanta pinchada en menos de 2 minutos</title>
-<meta name="description" content="Kit de tornillos selladores para reparar llantas pinchadas (tubeless) de carro, moto y camioneta en menos de 2 minutos. Envío gratis a toda Colombia.">
+<title>Thornyfix · Repara tu llanta pinchada en menos de 2 minutos</title>
+<meta name="description" content="Thornyfix: kit de tornillos selladores para reparar llantas pinchadas (tubeless) de carro, moto y camioneta en menos de 2 minutos. Envío gratis a toda Colombia.">
 
 <!-- Meta Pixel Code -->
 <script>
@@ -73,11 +73,20 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
   @media(max-width:820px){
-    .grid-3{grid-template-columns:1fr}
-    .grid-2{grid-template-columns:1fr;gap:26px}
+    /* Forzamos 1 columna con !important para vencer los grid-template-columns en línea */
+    .grid-3,
+    .grid-2{grid-template-columns:1fr !important;gap:24px !important}
     section{padding:52px 0}
-    .nav-links{display:none}
+    .nav-links{display:none !important}
     .sticky-mobile{display:block !important}
+    /* La foto del producto va primero en el hero para que se vea de inmediato */
+    #inicio .grid-2 > .reveal:last-child{order:-1}
+  }
+  @media(max-width:600px){
+    /* Titular del hero más contenido en pantallas pequeñas */
+    .hero-title{font-size:clamp(34px,9vw,48px) !important}
+    h1,h2{letter-spacing:-.03em}
+    .nav-brand{font-size:15px}
   }
 </style>
 </head>
@@ -100,7 +109,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
   <nav class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 10px 10px 18px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:linear-gradient(180deg,rgba(20,24,42,.82),rgba(8,11,29,.66));backdrop-filter:blur(22px);box-shadow:0 24px 80px rgba(0,0,0,.4)">
     <a href="#inicio" style="display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.02em">
       <span style="width:27px;height:27px;border-radius:9px;background:conic-gradient(from 220deg,var(--accent),#ff6a00,var(--red),#9b5cff,#5f8bff,var(--accent));box-shadow:0 0 24px rgba(255,216,74,.3)"></span>
-      <span>COMPRA EXACTA</span>
+      <span class="nav-brand">THORNYFIX</span>
     </a>
     <div class="nav-links" style="display:flex;align-items:center;gap:2px;font-size:13px;color:var(--muted)">
       <a href="#dolor" style="padding:9px 12px;border-radius:999px">El problema</a>
@@ -118,7 +127,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
   <div class="wrap grid-2" style="grid-template-columns:1.08fr .92fr;gap:46px">
     <div class="reveal">
       <span class="badge">🇨🇴 Envío gratis a toda Colombia</span>
-      <h1 style="font-size:clamp(40px,7vw,86px);line-height:.92;margin:20px 0 18px;letter-spacing:-.05em">Repara tu llanta pinchada en <span class="shine">menos de 2 minutos</span></h1>
+      <h1 class="hero-title" style="font-size:clamp(40px,7vw,86px);line-height:.92;margin:20px 0 18px;letter-spacing:-.05em">Repara tu llanta pinchada en <span class="shine">menos de 2 minutos</span></h1>
       <p class="muted" style="max-width:560px;font-size:clamp(16px,2vw,20px);line-height:1.7">Sin grúa, sin desmontar la rueda y sin perder horas buscando taller. Lleva el kit en la guantera y soluciona el pinchazo donde estés.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
         <a href="#oferta" class="btn btn-yellow">🛒 Quiero mi kit desde $29.800</a>
@@ -135,7 +144,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
       <div style="position:relative;border-radius:34px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.19);backdrop-filter:blur(22px);box-shadow:0 32px 95px rgba(0,0,0,.52)">
         <div style="position:absolute;top:-60px;right:-70px;width:280px;height:280px;border-radius:50%;background:rgba(255,216,74,.26);filter:blur(48px);pointer-events:none"></div>
         <div style="border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 22px 60px rgba(0,0,0,.45)">
-          <img loading="eager" fetchpriority="high" decoding="async" alt="Kit Compra Exacta para reparar llantas pinchadas" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_847333-MLA111076845142_052026-B_9fefb16f-1206-4a26-9dbe-fb5845aa2278.jpg?v=1782432042" style="width:100%;aspect-ratio:1/1;object-fit:cover">
+          <img loading="eager" fetchpriority="high" decoding="async" alt="Kit Thornyfix para reparar llantas pinchadas" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_847333-MLA111076845142_052026-B_9fefb16f-1206-4a26-9dbe-fb5845aa2278.jpg?v=1782432042" style="width:100%;aspect-ratio:1/1;object-fit:cover">
         </div>
         <div style="position:relative;margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <span style="border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);border-radius:999px;padding:9px 12px;font-size:12px;color:#fff;text-align:center">🔩 20 piezas</span>
@@ -186,7 +195,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
         <img loading="lazy" decoding="async" alt="Reparar la pinchadura en minutos con el kit" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_692643-MCO113372711063_062026-B.jpg?v=1782432051" style="width:100%;aspect-ratio:1/1;object-fit:cover">
         <div style="padding:22px">
           <h3 style="font-size:20px;margin-bottom:8px;color:var(--green)">Lo reparas en minutos</h3>
-          <p class="muted" style="font-size:14px;line-height:1.6">Con Compra Exacta sellas el pinchazo tú mismo y sigues tu camino. Sin depender de nadie.</p>
+          <p class="muted" style="font-size:14px;line-height:1.6">Con Thornyfix sellas el pinchazo tú mismo y sigues tu camino. Sin depender de nadie.</p>
         </div>
       </article>
     </div>
@@ -223,7 +232,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <section style="padding-top:10px">
   <div class="wrap grid-2" style="grid-template-columns:1.05fr .95fr">
     <div class="reveal" style="border-radius:28px;overflow:hidden;background:#fff;border:1px solid rgba(255,255,255,.14);box-shadow:0 28px 70px rgba(0,0,0,.45)">
-      <img loading="lazy" decoding="async" alt="Ventajas del kit Compra Exacta" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_745725-MCO112224339506_062026-B.jpg?v=1782432049" style="width:100%">
+      <img loading="lazy" decoding="async" alt="Ventajas del kit Thornyfix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/D_745725-MCO112224339506_062026-B.jpg?v=1782432049" style="width:100%">
     </div>
     <div class="reveal">
       <span class="badge">Por qué funciona</span>
@@ -287,7 +296,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <!-- LIFESTYLE -->
 <section style="padding-top:10px">
   <div class="reveal wrap" style="border-radius:32px;overflow:hidden;position:relative;box-shadow:0 32px 95px rgba(0,0,0,.5)">
-    <img loading="lazy" decoding="async" alt="Usando el kit Compra Exacta" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/a8fb786e-a483-4ab8-9e65-1447d72d2a87.png?v=1782435210&width=1000" style="width:100%;max-height:560px;object-fit:cover">
+    <img loading="lazy" decoding="async" alt="Usando el kit Thornyfix" src="https://cdn.shopify.com/s/files/1/0751/6261/5957/files/a8fb786e-a483-4ab8-9e65-1447d72d2a87.png?v=1782435210&width=1000" style="width:100%;max-height:560px;object-fit:cover">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,7,19,.85));display:flex;align-items:flex-end">
       <div style="padding:30px">
         <h2 style="font-size:clamp(24px,4vw,44px);line-height:1;letter-spacing:-.04em">Listo para cualquier camino.</h2>
@@ -354,7 +363,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
     </div>
     <div style="display:grid;gap:14px;margin-top:30px;text-align:left">
       <a href="#oferta" class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:22px;border:1px solid rgba(24,201,100,.4);background:linear-gradient(135deg,rgba(24,201,100,.16),rgba(255,255,255,.05))">
-        <div><small style="color:var(--green);font-weight:900">Recomendado ⭐</small><b style="display:block;font-size:18px;margin:3px 0">Pedir por Compra Exacta</b></div>
+        <div><small style="color:var(--green);font-weight:900">Recomendado ⭐</small><b style="display:block;font-size:18px;margin:3px 0">Pedir por Thornyfix</b></div>
         <span class="muted" style="font-size:13px">Con MercadoPago o pago contraentrega · Envío gratis</span>
       </a>
       <a href="https://www.mercadolibre.com.co/kit-20-tornillos-reparacion-pinchadura-llanta-moto-carro-camioneta-con-destornillador/up/MCOU4121144098?pdp_filters=item_id%3AMCO1986294647&matt_tool=15401541&ua=Onrp0Sm2bNm74If8dHa5lRF7nnDTjPMrHOgjeznp7iIf7b3e" data-evt="ml" target="_blank" rel="noopener" class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border-radius:22px;border:1px solid rgba(255,216,74,.35);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(0,0,0,.05))">
@@ -398,7 +407,7 @@ src="https://www.facebook.com/tr?id=2039069690020285&ev=PageView&noscript=1"
 <!-- FOOTER -->
 <footer style="padding:28px 0 96px;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.08)">
   <div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
-    <span>Compra Exacta · Kit sellador tubeless</span><span>Colombia · WhatsApp ventas</span>
+    <span>Thornyfix · Kit sellador tubeless</span><span>Colombia · WhatsApp ventas</span>
   </div>
 </footer>
 
